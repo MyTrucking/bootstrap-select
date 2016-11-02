@@ -1615,7 +1615,6 @@
 
       if (that.options.liveSearch) {
         if (/(^9$|27)/.test(e.keyCode.toString(10)) && isActive) {
-          e.preventDefault();
           e.stopPropagation();
           that.$menuInner.click();
           that.$button.focus();
@@ -1685,14 +1684,17 @@
 
       // Select focused option if "Enter", "Spacebar" or "Tab" (when selectOnTab is true) are pressed inside the menu.
       if ((/(13|32)/.test(e.keyCode.toString(10)) || (/(^9$)/.test(e.keyCode.toString(10)) && that.options.selectOnTab)) && isActive) {
-        if (!/(32)/.test(e.keyCode.toString(10))) e.preventDefault();
         if (!that.options.liveSearch) {
           var elem = $(':focus');
           elem.click();
           // Bring back focus for multiselects
           elem.focus();
+
           // Prevent screen from scrolling if the user hit the spacebar
-          e.preventDefault();
+          if (/(32)/.test(e.keyCode.toString(10))) {
+            e.preventDefault();
+          }
+
           // Fixes spacebar selection of dropdown items in FF & IE
           $(document).data('spaceSelect', true);
         } else if (!/(32)/.test(e.keyCode.toString(10))) {
