@@ -1760,12 +1760,14 @@
   // ==============================
   function Plugin(option) {
     // get the args of the outer function..
-    var args = arguments;
+    var args = [];
     // The arguments of the function are explicitly re-defined from the argument list, because the shift causes them
     // to get lost/corrupted in android 2.3 and IE9 #715 #775
     var _option = option;
 
-    [].shift.apply(args);
+    for (var i = 1; i < arguments.length; i++) {
+      args[i - 1] = arguments[i];
+    }
 
     var value;
     var chain = this.each(function () {
