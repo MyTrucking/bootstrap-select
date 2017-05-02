@@ -735,8 +735,11 @@
       } // end if for skipping li creation when lazy loading
 
       //If we are not multiple, we don't have a selected item, and we don't have a title, select the first element so something is set in the button
-      if (!this.multiple && $selectOptions.filter(':selected').length === 0 && !this.options.title) {
-        $selectOptions.eq(0).prop('selected', true).attr('selected', 'selected');
+      if (!this.multiple) {
+        var $selectOptions = $selectOptions || this.$element.find('option');
+        if ($selectOptions.filter(':selected').length === 0 && !this.options.title) {
+          $selectOptions.eq(0).prop('selected', true).attr('selected', 'selected');
+        }
       }
 
       return _li.join('');
